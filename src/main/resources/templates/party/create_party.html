@@ -1,0 +1,170 @@
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<link rel="stylesheet" href="css/party/party_main.css">
+
+<script src="../../js/party/findStore.js"></script>
+<script src="../../js/party/checkCreateParty.js"></script>
+
+<div class="party-container">
+	<div class="party-form">
+		<div class="party-form-header">
+			<svg xmlns="http://www.w3.org/2000/svg" width="60" height="40" fill="currentColor" class="bi bi-people mb-2" viewBox="0 0 16 16">
+				<path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"></path>
+			</svg>
+			<h2>방 만들기</h2>
+		</div>
+
+		<form th:action="@{/party}" th:object="${partyDTO}" th:with="storeName=${storeName}" method="post">
+			<!-- 파티 가게 설정 -->
+			<div class="position-relative mx-auto">
+				<input class="form-control border-0 w-100 py-3 px-4 rounded-pill bg-light" th:name="storeName" th:value="${storeName}"  type="text" placeholder="찾아보기를 눌러 주문할 가게를 선택해주세요" id="store_name" readonly>
+				<input type="button" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;" onclick="openFindStoreForm()" value="찾아보기">
+			</div>
+			<!-- //파티 가게 설정 -->
+
+			<!-- 파티 옵션 설정 -->
+			<div class="party-option">
+				<div class="party-option-header mt-4 mb-4 pt-2">
+					<svg xmlns="http://www.w3.org/2000/svg" width="40" height="25" fill="currentColor" class="bi bi-gear mb-2" viewBox="0 0 16 16">
+						<path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"></path>
+						<path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"></path>
+					</svg>
+					<h4>방 설정 (Option)</h4>
+				</div>
+
+
+				<div class="container mt-4">
+					<div class="party-option-item mb-3">
+						<label class="form-label">모집방식:</label>
+						<div class="d-flex">
+							<div class="form-check me-3">
+								<input class="form-check-input" type="radio" name="join_type" th:field="*{matching}" value="false" id="inviteOption">
+								<label class="form-check-label" for="inviteOption">초대하기</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="join_type" th:field="*{matching}" value="true" id="randomOption">
+								<label class="form-check-label" for="randomOption">랜덤모집</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="party-option-item mb-3">
+						<label class="form-label">결제방식:</label>
+						<div class="d-flex">
+							<div class="form-check me-3 invite" th:each="payType : ${payTypes}">
+								<input class="form-check-input " type="radio" name="pay_type" th:field="*{payType}" th:value="${payType.name()}" th:id="${payType.name()}">
+								<label class="form-check-label" th:for="${payType.name()}">
+									<span th:text="${payType.getKorName()}"></span>
+								</label>
+							</div>
+							<div class="form-check me-3 random d-none">
+								<input class="form-check-input" type="radio" name="pay_type" th:field="*{payType}" value="DUTCH" id="DUTCH">
+								<label class="form-check-label" for="DUTCH">각자결제</label>
+							</div>
+							<div class="form-check random d-none">
+								<input class="form-check-input" type="radio" name="pay_type" th:field="*{payType}" value="SPLIT" id="SPLIT">
+								<label class="form-check-label" for="SPLIT">분할결제</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="party-option-item mb-3 random-type d-none">
+						<label class="form-label">선택방법:</label>
+						<div class="d-flex">
+							<div class="form-check me-3" th:each="randomType : ${randomTypes}">
+								<input class="form-check-input random-type d-none" type="radio" name="random_type" th:field="*{randomType}" th:value="${randomType.name()}" th:id="${randomType.name()}">
+								<label class="form-check-label random-type d-none" th:for="${randomType.name()}">
+									<span th:text="${randomType.getKorName()}"></span>
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="party-option-item mb-3">
+						<label class="form-label">최대 파티 인원:</label>
+						<div class="d-flex">
+							<select th:field="*{maxMemberCount}" class="form-select me-3 invite">
+								<option th:each="maxMemberCount : ${invitePartyMaxMemberCount}" th:value="${maxMemberCount}" th:text="${maxMemberCount}"></option>
+							</select>
+							<select th:field="*{maxMemberCount}" class="form-select random d-none">
+								<option th:each="maxMemberCount : ${randomPartyMaxMemberCount}" th:value="${maxMemberCount}" th:text="${maxMemberCount}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="d-flex d-flex justify-content-end">
+					<button class="btn-light me-2" onclick="window.location.href='/party'" type="button">취소</button>
+					<button type="submit" id="submitBtn" class="btn-primary text-white">방만들기</button>
+				</div>
+			</div>
+			<!-- //파티 옵션 설정 -->
+		</form>
+	</div>
+</div>
+
+
+
+
+<!-- 가게 검색 -->
+<div class="find-store-container">
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">주문할 가게 찾기</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<!-- 가게 검색창 -->
+					<div class="find-store-area">
+						<input id="keyword" class="form-control me-2" type="text" placeholder="가게명 검색" aria-label="Search" oninput="findStores(event)">
+
+						<!-- 검색된 상점목록 -->
+						<ul class="store-list list-group">
+						</ul>
+						<!-- //검색된 상점목록 -->
+
+					</div>
+					<!-- //가게 검색창 -->
+
+					<!-- 선택후 보여지는 정보 -->
+					<div class="store-info d-none">
+						<input type="hidden" class="form-control" name="stnum" id="stnum">
+						<div class="row">
+							<div class="col-md-12 col-lg-4">
+								<div class="form-item w-100">
+									<label class="form-label my-3" for="name">가게명</label>
+									<input type="text" class="form-control" id="name" readonly>
+								</div>
+							</div>
+							<div class="col-md-12 col-lg-8">
+								<div class="form-item w-100">
+									<label class="form-label my-3" for="address">주소</label>
+									<input type="text" class="form-control" id="address" readonly>
+								</div>
+							</div>
+							<div class="col-md-12 col-lg-8">
+								<div class="form-item w-100">
+									<label class="form-label my-3" for="category">카테고리</label>
+									<input type="text" class="form-control" id="category" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- //선택후 보여지는 정보 -->
+
+				</div>
+
+				<!-- 재검색, 선택 버튼 -->
+				<div class="modal-footer d-none" id="select-footer">
+					<button type="button" class="btn btn-secondary" onclick="resetFindStores()">재검색</button>
+					<button type="button" class="btn btn-primary" onclick="selectStore();" data-bs-dismiss="modal">선택하기</button>
+				</div>
+				<!-- //재검색, 선택 버튼 -->
+			</div>
+		</div>
+	</div>
+</div>
