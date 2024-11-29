@@ -23,7 +23,7 @@ cursor = mysql_conn.cursor()
 cursor.execute("SELECT id, title,category,content FROM faq ")
 rows = cursor.fetchall()
 
-
+#
 url = "https://api.openai.com/v1/embeddings"
 headers = {
     "Content-Type": "application/json",

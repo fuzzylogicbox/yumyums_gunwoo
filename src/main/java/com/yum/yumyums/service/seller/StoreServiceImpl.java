@@ -12,6 +12,9 @@ import com.yum.yumyums.service.ImagesService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -117,10 +120,18 @@ public class StoreServiceImpl implements StoreService {
     @Transactional
     public void save(StoreDTO storeDTO) {
         Images savedImages = imagesService.saveImage(storeDTO.getImagesDTO());
-
+        storeDTO.setLocation(createLocation(storeDTO.getConvX(), storeDTO.getConvY()));
         Store store = storeDTO.dtoToEntity();
+
         store.setImages(savedImages);
         storeRepository.save(store);
+    }
+
+    private Point createLocation(double convX, double convY) {
+        // JTS GeometryFactory
+
+        GeometryFactory geometryFactory = new GeometryFactory();
+        return geometryFactory.createPoint(new Coordinate(convY, convX));
     }
 
     @Override
@@ -130,7 +141,10 @@ public class StoreServiceImpl implements StoreService {
     }
 
     public List<StoreDTO> findStoresWithinRadius(double lat, double lon, int radius) {
-        List<Store> stores = storeRepository.findStoresWithinRadius(lat, lon, radius);
+//        List<Store> stores = storeRepository.findStoresWithinRadius(lat, lon, radius);
+        String point = String.format("POINT(%f %f)", lat, lon);
+        System.out.println("위도경도 : "+point);
+        List<Store> stores = storeRepository.findStoresWithinRadiusV2(point, radius);
         List<StoreDTO> result = new ArrayList<>();
 
         for (Store store : stores) {
