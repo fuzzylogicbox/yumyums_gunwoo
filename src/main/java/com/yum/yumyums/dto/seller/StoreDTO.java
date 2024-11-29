@@ -10,6 +10,7 @@ import com.yum.yumyums.entity.seller.Store;
 import com.yum.yumyums.enums.Busy;
 import com.yum.yumyums.enums.FoodCategory;
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ public class StoreDTO {
     private ImagesDTO imagesDTO;
     private double convX;
     private double convY;
+    private Point location; // JTS Point 타입 추가
 
     public Store dtoToEntity() {
         Store store = new Store();
@@ -46,6 +48,7 @@ public class StoreDTO {
         store.setBusy(busy);
         store.setConvX(convX);
         store.setConvY(convY);
+        store.setLocation(location); // location 설정
 
         if(imagesDTO != null){
             store.setImages(imagesDTO.dtoToEntity());

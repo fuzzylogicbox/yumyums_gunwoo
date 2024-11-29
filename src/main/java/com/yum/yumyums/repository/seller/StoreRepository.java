@@ -38,4 +38,28 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
             "cos(radians(convX) - radians(:lon)) + sin(radians(:lat)) * " +
             "sin(radians(convY)))) <= (:radius / 1000.0)", nativeQuery = true)
     List<Store> findStoresWithinRadius(@Param("lat") double lat, @Param("lon") double lon, @Param("radius") int radius);
+
+
+
+
+    /*
+
+    ### 공간 인덱스(Spatial Indexing)를 활용하여 성능 최적화 ###
+
+    " 공간 인덱싱(Spatial Indexing)은 지리적 데이터나 공간 데이터를 효율적으로 검색하기 위한 데이터베이스 인덱싱 기법입니다.
+     일반적인 인덱스가 숫자나 문자열을 정렬하여 빠르게 검색하는 것처럼,
+     공간 인덱스는 지리적 좌표(예: 위도와 경도)를 기반으로 데이터의 위치를 빠르게 검색할 수 있도록 도와줍니다. "
+
+    1. 기존 Haversine 방식의 문제점 :
+    인덱스를 사용하지 않음: Haversine 방식은 좌표값에 인덱스를 사용하지 않고, 모든 데이터를 계산하는 방식이기 때문에 데이터가 많아질수록 성능이 떨어질 수 있습니다.
+    계산 비용이 큼: 각 데이터에 대해 삼각함수(sin, cos, acos) 계산을 수행하므로, 계산 비용이 큽니다.
+
+
+    2. 공간 인덱스의 이점 :
+     - 인덱스를 사용하여 성능 최적화 : 쿼리가 모든 데이터를 검사할 필요 없이 인덱스에 의해 미리 필터링된 데이터에 대해서만 계산을 수행합니다.
+     - 단계 감소: 기존 Haversine 쿼리와 달리 모든 행에 대해 거리 계산을 하지 않으므로, 데이터의 양이 많을수록 성능 향상 폭이 커집니다.
+    */
+    @Query(value = "SELECT * FROM store " +
+            "WHERE ST_Distance_Sphere(location,  ST_GeomFromText(:point, 4326)) <= :radius", nativeQuery = true)
+    List<Store> findStoresWithinRadiusV2(@Param("point") String point, @Param("radius") int radius);
 }

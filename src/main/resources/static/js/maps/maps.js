@@ -94,9 +94,10 @@ function loadStores(lat, lon, radius) {
             // 원을 추가
             drawCircle(lat, lon, radius);
         },
-        error: function(xhr, status, error) {
-            console.error("AJAX 요청 실패:", error);
-        }
+         error: function(jqXHR, textStatus, errorThrown) {
+             console.error('AJAX 요청 실패', textStatus, errorThrown);
+             console.error('응답:', jqXHR.responseText); // 응답 텍스트 확인
+         }
     });
 }
 
