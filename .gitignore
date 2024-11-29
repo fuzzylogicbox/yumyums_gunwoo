@@ -71,4 +71,4 @@ src/main/resources/static/img/seller
 src/main/resources/static/img/member
 
 # pyProject #
-src/main/resources/pyProject/logic/*
+*.py
