@@ -9,6 +9,10 @@ import com.yum.yumyums.enums.FoodCategory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
+import org.locationtech.jts.geom.Point;
 
 import java.util.List;
 
@@ -61,6 +65,11 @@ public class Store {
 
 	@Column(nullable = false)
 	private double convY;
+
+	@Column(nullable = false)
+	@JdbcTypeCode(SqlTypes.GEOMETRY)
+	private Point location; // JTS Point 타입
+
 
 	public StoreDTO entityToDto() {
 		StoreDTO storeDTO = new StoreDTO();
