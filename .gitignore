@@ -64,7 +64,7 @@ hs_err_pid*
 replay_pid*
 
 # data
-
+application-data.yml
 
 # static #
 src/main/resources/static/img/seller
