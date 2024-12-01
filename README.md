@@ -1,5 +1,5 @@
 # yumyums V2
-
+<br>
 <p align="center">
     <img src="https://yumyums-v2-gunwoo.s3.ap-northeast-2.amazonaws.com/yumyums_member.jpg" alt="yumyums_logo">
 </p>
@@ -10,7 +10,7 @@
 AWS 배포를 위해 기존 프로젝트의 기능을 개선하고 성능을 최적화하였습니다.  
 
 - ###### 기존 yumyums 팀 작업 Git 레포지토리 : [여기](https://github.com/j-seon/yumyums)에서 확인할 수 있습니다.
-- ###### 현재 yumyums V2의 AWS 호스팅 URL** : [여기](http://15.165.186.19:8082/)에서 확인할 수 있습니다.
+- ###### 현재 yumyums V2의 AWS 호스팅 URL : [여기](http://15.165.186.19:8082/)에서 확인할 수 있습니다.
 <br><br>
 
 ##   주요 보완 사항
