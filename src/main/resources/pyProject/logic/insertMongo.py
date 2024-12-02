@@ -22,7 +22,7 @@ mongo_collection = mongo_db["non_token_question"]
 cursor = mysql_conn.cursor()
 cursor.execute("SELECT id, title,category,content FROM faq ")
 rows = cursor.fetchall()
-
+api_key = "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"
 #
 url = "https://api.openai.com/v1/embeddings"
 headers = {
