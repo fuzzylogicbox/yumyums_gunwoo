@@ -45,7 +45,6 @@ dependencies {
 	implementation 'org.webjars:stomp-websocket:2.3.4'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 	implementation 'org.locationtech.jts:jts-core:1.18.0'
-	implementation 'org.hibernate:hibernate-core:6.0.0.Final' // Hibernate Core 버전
 	implementation 'org.hibernate:hibernate-spatial:6.0.0.Final' // Hibernate Spatial 버전
 }
 
