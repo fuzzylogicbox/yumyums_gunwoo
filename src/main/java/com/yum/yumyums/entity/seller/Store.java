@@ -66,7 +66,7 @@ public class Store {
 	@Column(nullable = false)
 	private double convY;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "geometry(Point, 4326)")
 	@JdbcTypeCode(SqlTypes.GEOMETRY)
 	private Point location; // JTS Point 타입
 

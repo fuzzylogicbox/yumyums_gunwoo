@@ -32,20 +32,30 @@
     function showPosition(position) {
         var lat = position.coords.latitude; // 위도
         var lng = position.coords.longitude; // 경도
-
+        console.log("lat,lng : ",lat,lng)
+        console.log(position.coords)
         var coords = new kakao.maps.LatLng(lat, lng);
         map.setCenter(coords); // 지도 중심을 현재 위치로 변경
         marker.setPosition(coords); // 마커를 현재 위치로 이동
 
         // 위도와 경도를 입력 필드에 설정
-        document.getElementById("convX").value = lng;
-        document.getElementById("convY").value = lat;
+        document.getElementById("convX").value = lat;
+        document.getElementById("convY").value = lng;
 
         // 주소 변환
         geocoder.coord2Address(lng, lat, function(results, status) {
+            console.log("주소 변환 결과:", results, "상태:", status);
             if (status === kakao.maps.services.Status.OK) {
-                var address = results[0].address.address_name; // 주소
-                document.getElementById("address").value = address; // 주소 값을 입력 필드에 설정
+                if (results && results.length > 0) {
+                    var address = results[0].road_address ? results[0].road_address.address_name : results[0].address.address_name; // 주소
+                    console.log("현재주소:", address, results[0]);
+                    document.getElementById("address").value = address; // 주소 값을 입력 필드에 설정
+                } else {
+                    console.error("주소 변환 결과가 없습니다.");
+                }
+            }else {
+                console.error("주소변환실패 : ", status)
+                console.log("입력좌표 : ",lat, lng)
             }
         });
     }
@@ -71,8 +81,8 @@
         var coords = new kakao.maps.LatLng(DEFAULT_LAT, DEFAULT_LNG);
         map.setCenter(coords);
         marker.setPosition(coords);
-        document.getElementById("convX").value = DEFAULT_LNG;
-        document.getElementById("convY").value = DEFAULT_LAT;
+        document.getElementById("convY").value = DEFAULT_LNG;
+        document.getElementById("convX").value = DEFAULT_LAT;
         document.getElementById("address").value = "서울 강남구 강남대로 지하 396"; // 기본 주소 설정
     }
 
@@ -94,11 +104,11 @@
                     if (status === kakao.maps.services.Status.OK) {
 
                         var result = results[0]; // 첫번째 결과의 값을 활용
-
+                        console.log("주소검색 : ", result.y, result.x)
                     // 해당 주소에 대한 좌표를 받아서
                     var coords = new kakao.maps.LatLng(result.y, result.x);
-                    document.getElementById("convX").value = result.x;
-                    document.getElementById("convY").value = result.y;
+                    document.getElementById("convY").value = result.x;
+                    document.getElementById("convX").value = result.y;
                     // 지도를 보여준다.
                     mapContainer.style.display = "block";
                     map.relayout();
