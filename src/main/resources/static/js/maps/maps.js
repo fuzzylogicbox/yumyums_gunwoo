@@ -40,7 +40,8 @@ function loadStores(lat, lon, radius) {
             const markers = []; // 새로운 마커 배열
 
             data.forEach(store => {
-                const markerPosition = new kakao.maps.LatLng(store.convY, store.convX);
+                console.log(store.convX , store.convY);
+                const markerPosition = new kakao.maps.LatLng(store.convX, store.convY);
 
                 // 마커 생성
                 const marker = new kakao.maps.Marker({
@@ -185,7 +186,7 @@ function searchAddressSetCenter() {
                 if (status === kakao.maps.services.Status.OK) {
 
                     var result = results[0]; // 첫번째 결과의 값을 활용
-
+                    console.log("주소검색 : ", result.y, result.x)
                     // 해당 주소에 대한 좌표를 받아서
                     var coords = new kakao.maps.LatLng(result.y, result.x);
 
